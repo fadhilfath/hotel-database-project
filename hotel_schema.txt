@@ -1,0 +1,164 @@
+-- MySQL dump 10.13  Distrib 5.6.17, for osx10.9 (x86_64)
+--
+-- Host: localhost    Database: hotel
+-- ------------------------------------------------------
+-- Server version	5.6.26
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Address`
+--
+
+DROP TABLE IF EXISTS `Address`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Address` (
+  `visitor_id` int(10) NOT NULL DEFAULT '0',
+  `street` varchar(15) DEFAULT NULL,
+  `city` varchar(15) DEFAULT NULL,
+  `code` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`visitor_id`),
+  CONSTRAINT `address_ibfk_1` FOREIGN KEY (`visitor_id`) REFERENCES `Visitor` (`visitor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Address`
+--
+
+LOCK TABLES `Address` WRITE;
+/*!40000 ALTER TABLE `Address` DISABLE KEYS */;
+INSERT INTO `Address` VALUES (164,'16th','San Diego','50382'),(325,'Talbot','Denver','80125'),(476,'Broadway','New york','53024'),(543,'Main','New York','30291'),(637,'Canyon','Boulder','80213'),(876,'Walnut','Houston','54829');
+/*!40000 ALTER TABLE `Address` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Building`
+--
+
+DROP TABLE IF EXISTS `Building`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Building` (
+  `building_id` int(11) NOT NULL DEFAULT '0',
+  `building_name` varchar(11) DEFAULT NULL,
+  PRIMARY KEY (`building_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Building`
+--
+
+LOCK TABLES `Building` WRITE;
+/*!40000 ALTER TABLE `Building` DISABLE KEYS */;
+INSERT INTO `Building` VALUES (1,'A'),(2,'B'),(3,'C');
+/*!40000 ALTER TABLE `Building` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Room_Book`
+--
+
+DROP TABLE IF EXISTS `Room_Book`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Room_Book` (
+  `room_number` int(11) NOT NULL DEFAULT '0',
+  `visitor_id` int(10) NOT NULL DEFAULT '0',
+  `room_upgrade` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`room_number`,`visitor_id`),
+  KEY `visitor_id` (`visitor_id`),
+  CONSTRAINT `room_book_ibfk_1` FOREIGN KEY (`room_number`) REFERENCES `Room_Type` (`room_number`),
+  CONSTRAINT `room_book_ibfk_2` FOREIGN KEY (`visitor_id`) REFERENCES `Visitor` (`visitor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Room_Book`
+--
+
+LOCK TABLES `Room_Book` WRITE;
+/*!40000 ALTER TABLE `Room_Book` DISABLE KEYS */;
+INSERT INTO `Room_Book` VALUES (101,325,1),(102,543,0),(103,876,1),(105,476,1),(109,637,1),(110,164,0);
+/*!40000 ALTER TABLE `Room_Book` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Room_Type`
+--
+
+DROP TABLE IF EXISTS `Room_Type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Room_Type` (
+  `room_number` int(11) NOT NULL DEFAULT '0',
+  `building_id` int(11) NOT NULL DEFAULT '0',
+  `room_available` tinyint(1) DEFAULT NULL,
+  `room_type` varchar(45) DEFAULT NULL,
+  `price` float DEFAULT NULL,
+  PRIMARY KEY (`room_number`,`building_id`),
+  KEY `building_id` (`building_id`),
+  CONSTRAINT `room_type_ibfk_1` FOREIGN KEY (`building_id`) REFERENCES `Building` (`building_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Room_Type`
+--
+
+LOCK TABLES `Room_Type` WRITE;
+/*!40000 ALTER TABLE `Room_Type` DISABLE KEYS */;
+INSERT INTO `Room_Type` VALUES (101,1,1,'Regular',85.95),(102,2,0,'Regular',92.5),(103,3,1,'VIP',450),(105,1,0,'Double bed',124.95),(109,2,1,'Regular',87.95),(110,3,1,'Regular',98.75);
+/*!40000 ALTER TABLE `Room_Type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Visitor`
+--
+
+DROP TABLE IF EXISTS `Visitor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Visitor` (
+  `visitor_id` int(10) NOT NULL DEFAULT '0',
+  `first_name` varchar(45) DEFAULT NULL,
+  `last_name` varchar(45) DEFAULT NULL,
+  `arrival_date` date DEFAULT NULL,
+  `leaving_date` date DEFAULT NULL,
+  `phone_number` int(11) DEFAULT NULL,
+  `deposit` float DEFAULT NULL,
+  PRIMARY KEY (`visitor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Visitor`
+--
+
+LOCK TABLES `Visitor` WRITE;
+/*!40000 ALTER TABLE `Visitor` DISABLE KEYS */;
+INSERT INTO `Visitor` VALUES (164,'Caroline','Lomey','2015-08-16','2015-08-30',2147483647,660820),(325,'Peter','Carney','2015-05-15','2015-05-22',2147483647,208405),(476,'Anne','Sandt','2015-08-01','0000-00-00',2147483647,383084),(543,'Juliette','Beckons','2015-06-10','2015-06-29',2147483647,204795),(637,'Alfred','Owens','2015-09-04','2015-09-17',2147483647,608208),(876,'Daniel','Peters','2015-07-15','0000-00-00',2147483647,902840);
+/*!40000 ALTER TABLE `Visitor` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-12-06 16:08:16
