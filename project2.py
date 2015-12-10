@@ -27,7 +27,7 @@ class hotelApp(Tkinter.Tk):
 
     def initialize(self):
         self.grid()
-        img = self.img = ImageTk.PhotoImage(Image.open('hotel_picture.jpg'))
+        img = self.img = ImageTk.PhotoImage(Image.open('images/hotel_picture.jpg'))
         panel = Tkinter.Label(self,image=img)
         panel.pack(side = "bottom", fill = "both", expand = "yes")
         panel.grid(column=0,row=0)
