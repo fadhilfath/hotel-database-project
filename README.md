@@ -20,7 +20,7 @@ mysql –u ‘username’ –p ‘database_name’ < filename.sql (database file
 #####Instruction to run the project:
 - Run hotel_database.sql in mySQL to create the hotel database.
 - Run project.py to launch the interface (Install all required libraries).
-- 
+
 #####Technology
 - MySql
 - Python
